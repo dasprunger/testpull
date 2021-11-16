@@ -21,7 +21,6 @@ jobs:
           ref: build
       - name: Setup and add
         run: |
-          git add ./test-${GITHUB_REF#refs/heads/}.pdf
-          git add ./test-${GITHUB_REF#refs/heads/}-$(date +'%Y-%m-%d')-${{ github.sha }}.pdf
+          git add ./test-*.pdf
           git commit -m "new builds"
           git push origin
