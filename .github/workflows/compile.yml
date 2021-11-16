@@ -12,9 +12,9 @@ jobs:
           root_file: test.tex
       - name: Make copies
         run: |
-          mkdir -p out
           cp ./test.pdf ./test-${GITHUB_REF#refs/heads/}.pdf
           cp ./test.pdf ./test-${GITHUB_REF#refs/heads/}-$(date +'%Y-%m-%d')-${{ github.sha }}.pdf
+          git stash
       - name: Checkout build
         uses: actions/checkout@v2
         with:
@@ -23,6 +23,7 @@ jobs:
         run: |
           git config --global user.name "Latex build bot"
           git config --global user.email "<>"
+          git stash pop
           git add ./test-*.pdf
           git commit -m "new builds"
           git push origin
