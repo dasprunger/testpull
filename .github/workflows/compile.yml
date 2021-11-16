@@ -1,20 +1,13 @@
-name: Build paper
+name: Build LaTeX document
 on: [push]
 jobs:
   build_latex:
-    if: "startsWith(github.event.head_commit.message, '[build]')"   // only runs when commit starts with [build]
     runs-on: ubuntu-latest
     steps:
-      - name: Set up repository
+      - name: Set up Git repository
         uses: actions/checkout@v2
-        with:
-          submodules: recursive
-      - name: Compile latex
+      - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: "test.tex"
-      - name: Upload PDF as an artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: test.pdf
-          path: test.pdf
+          root_file: test.tex
+
