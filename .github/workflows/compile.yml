@@ -10,8 +10,13 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: test.tex
+      - name: move
+        run: mkdir -p out && mv test.pdf ./out
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          files: test.pdf
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          publish_branch: build
+          force_orphan: true
 
