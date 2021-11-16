@@ -11,9 +11,9 @@ jobs:
         with:
           root_file: test.tex
       - name: Make main copy
-        run: mkdir -p out && mv test.pdf ./out/test-$(echo ${GITHUB_REF#refs/heads/}.pdf
+        run: mkdir -p out && mv test.pdf ./out/test-${GITHUB_REF#refs/heads/}.pdf
       - name: Make reserve copy
-        run: cp ./out/test.pdf ./out/test-$(echo ${GITHUB_REF#refs/heads/}-$(date +'%Y-%m-%d')-${{ github.sha }}.pdf
+        run: cp ./out/test.pdf ./out/test-${GITHUB_REF#refs/heads/}-$(date +'%Y-%m-%d')-${{ github.sha }}.pdf
       - name: Release
         uses: peaceiris/actions-gh-pages@v3
         with:
