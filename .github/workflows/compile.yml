@@ -18,6 +18,7 @@ jobs:
           cp ./test.pdf ./test-${GITHUB_REF#refs/heads/}-$(date +'%Y-%m-%d')-${{ github.sha }}.pdf
           git config --global user.name "Latex build bot"
           git config --global user.email "<>"
+          git checkout build
           git add -f ./test-*.pdf
           git commit -m "new builds"
           git push origin
