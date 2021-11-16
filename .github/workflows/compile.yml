@@ -17,10 +17,10 @@ jobs:
           cp ./test.pdf ./test-${GITHUB_REF#refs/heads/}-$(date +'%Y-%m-%d')-${{ github.sha }}.pdf
       - name: Setup and add
         run: |
-          git config user.name "Latex build bot"
-          git config user.email "david.sprunger@gmail.com"
+          git config --global user.name "Latex_build_bot"
+          git config --global user.email "david.sprunger@gmail.com"
           git checkout build
           git add ./test-${GITHUB_REF#refs/heads/}.pdf
           git add ./test-${GITHUB_REF#refs/heads/}-$(date +'%Y-%m-%d')-${{ github.sha }}.pdf
           git commit -m "new builds"
-          git push origin build
+          git push origin
