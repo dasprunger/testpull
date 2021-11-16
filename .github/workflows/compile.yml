@@ -10,13 +10,17 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: test.tex
-      - name: Make main copy
-        run: mkdir -p out && cp ./test.pdf ./out/test-${GITHUB_REF#refs/heads/}.pdf
-      - name: Make reserve copy
-        run: cp ./test.pdf ./out/test-${GITHUB_REF#refs/heads/}-$(date +'%Y-%m-%d')-${{ github.sha }}.pdf
-      - name: Release
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
-          publish_branch: build
+      - name: Make copies
+        run: |
+          mkdir -p out
+          cp ./test.pdf ./test-${GITHUB_REF#refs/heads/}.pdf
+          cp ./test.pdf ./test-${GITHUB_REF#refs/heads/}-$(date +'%Y-%m-%d')-${{ github.sha }}.pdf
+      - name: Setup and add
+        run: |
+          git config user.name "Latex build bot"
+          git config user.email "david.sprunger@gmail.com"
+          git checkout build
+          git add ./test-${GITHUB_REF#refs/heads/}.pdf
+          git add ./test-${GITHUB_REF#refs/heads/}-$(date +'%Y-%m-%d')-${{ github.sha }}.pdf
+          git commit -m "new builds"
+          git push origin build
