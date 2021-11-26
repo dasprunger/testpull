@@ -14,14 +14,12 @@ jobs:
           root_file: test.tex
       - name: Make copies
         run: |
-          cp ./test.pdf ./test-${GITHUB_REF#refs/heads/}.pdf
-          cp ./test.pdf ./test-${GITHUB_REF#refs/heads/}-$(date +'%Y-%m-%d')-${{ github.sha }}.pdf
           git config --global user.name "Latex build bot"
           git config --global user.email "<>"
-          git stash
           git checkout build
           git rm ./test-${GITHUB_REF#refs/heads/}.pdf --ignore-unmatch
-          git stash pop
+          cp ./test.pdf ./test-${GITHUB_REF#refs/heads/}.pdf
+          cp ./test.pdf ./test-${GITHUB_REF#refs/heads/}-$(date +'%Y-%m-%d')-${{ github.sha }}.pdf
           git add -f ./test-*.pdf
           git commit -m "new builds"
           git push origin
